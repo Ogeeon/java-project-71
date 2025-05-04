@@ -1,0 +1,5 @@
+app/.gradle
+app/.idea
+app/gradlew.bat
+app/build
+app/app.iml
