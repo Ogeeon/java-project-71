@@ -1,7 +1,37 @@
 package hexlet.code;
+import com.fasterxml.jackson.core.type.TypeReference;
+import com.fasterxml.jackson.databind.ObjectMapper;
+import picocli.CommandLine;
+import picocli.CommandLine.Command;
 
-public class App {
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.Map;
+import java.util.concurrent.Callable;
+
+@Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
+        description = "Compares two configuration files and shows a difference.")
+public class App implements Callable<String> {
+
+    @CommandLine.Parameters(index = "0", description = "path to first file")
+    private String filePath1;
+
+    @CommandLine.Parameters(index = "1", description = "path to second file")
+    private String filePath2;
+
+    @CommandLine.Option(names = {"-f", "--format"}, description = "output format [default: stylish]")
+    private String format = "stylish";
+
+    @Override
+    public String call() throws Exception {
+        var diff = Differ.generate(filePath1, filePath2);
+        System.out.println(diff);
+        return "OK";
+    }
+
     public static void main(String[] args) {
-        System.out.println("Hello World!");
+        int exitCode = new CommandLine(new App()).execute(args);
+        System.exit(exitCode);
     }
 }
