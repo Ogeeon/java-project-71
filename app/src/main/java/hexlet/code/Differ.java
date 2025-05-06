@@ -14,6 +14,9 @@ import java.util.stream.Collectors;
 public class Differ {
 
     public static String generate(String filePath1, String filePath2) throws Exception {
+        if (filePath1 == null || filePath2 == null) {
+            throw new Exception("Neither of file paths can be null");
+        }
         Map<String, String> map1 = getFileContent(filePath1);
         Map<String, String> map2 = getFileContent(filePath2);
         var m1ks = map1.keySet();
@@ -33,7 +36,8 @@ public class Differ {
                             result.append("  - ").append(k).append(": ").append(v1);
                         }
                         if (v2 != null) {
-                            result.append(result.isEmpty() ? "" : "\n").append("  + ").append(k).append(": ").append(v2);
+                            result.append(result.isEmpty() ? "" : "\n")
+                                    .append("  + ").append(k).append(": ").append(v2);
                         }
                     }
                     return result.toString();
@@ -48,6 +52,6 @@ public class Differ {
             throw new Exception("File '" + path + "' does not exist");
         }
         ObjectMapper objectMapper = new ObjectMapper();
-        return objectMapper.readValue(Files.readString(path), new TypeReference<>() {});
+        return objectMapper.readValue(Files.readString(path), new TypeReference<>() { });
     }
 }
