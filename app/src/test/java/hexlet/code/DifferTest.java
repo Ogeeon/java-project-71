@@ -2,6 +2,7 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -9,7 +10,7 @@ import java.nio.file.Paths;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class DifferTest {
+class DifferTest {
     private Path getFixturePath(String fileName) {
         return Paths.get("src", "test", "resources", fileName)
                 .toAbsolutePath().normalize();
@@ -21,7 +22,7 @@ public class DifferTest {
     }
 
     @Test
-    public void testFlatJsonCompare() throws Exception {
+    void testFlatJsonCompare() throws Exception {
         var expected = readFixture("flat-json-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/flat-json-compare-src1.json",
                 "./src/test/resources/flat-json-compare-src2.json");
@@ -29,14 +30,14 @@ public class DifferTest {
     }
 
     @Test
-    public void testWrongPath1() {
-        assertThrows(Exception.class, () -> Differ.generate("nonexistentfile",
+    void testWrongPath1() {
+        assertThrows(IOException.class, () -> Differ.generate("nonexistentfile",
                 "./src/test/resources/flat-json-compare-src2.json"));
     }
 
     @Test
-    public void testWrongPath2() {
-        assertThrows(Exception.class, () -> Differ.generate("./src/test/resources/flat-json-compare-src1.json",
+    void testWrongPath2() {
+        assertThrows(IOException.class, () -> Differ.generate("./src/test/resources/flat-json-compare-src1.json",
                 "nonexistentfile"));
     }
 }

@@ -2,20 +2,22 @@ package hexlet.code;
 
 import org.junit.jupiter.api.Test;
 
+import java.io.IOException;
+
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 
-public class AppTest {
+class AppTest {
     @Test
-    public void testAppInstantiation() {
+    void testAppInstantiation() {
         App app = new App();
         assertNotNull(app);
     }
 
     @Test
-    public void testCallMethod() throws Exception {
+    void testCallMethod() {
         App app = new App();
         // No parameters in test, so method will throw an exception
-        assertThrows(Exception.class, app::call);
+        assertThrows(IOException.class, app::call);
     }
 }
