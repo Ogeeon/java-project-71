@@ -7,6 +7,9 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: ./app
 
     steps:
       - uses: actions/checkout@v4
@@ -19,7 +22,7 @@ jobs:
         with:
           fetch-depth: 0
       - name: Execute Gradle build
-        run: ./app/gradlew build
+        run: ./gradlew build
       - name: Generate coverage report
         run: make report
       - name: Cache SonarQube packages
@@ -37,4 +40,4 @@ jobs:
       - name: Build and analyze
         env:
           SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
-        run: ./app/gradlew sonar --info
+        run: ./gradlew sonar --info
