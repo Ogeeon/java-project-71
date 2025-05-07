@@ -15,3 +15,5 @@ to build and run the application.
 ### Use cases
 - Compare two flat json files\
   Call the utility passing two file names. [Here](https://asciinema.org/a/78skTHPUIAs2T66a1QnaVLZRR) is the asciinema with the demonstration. 
+- Compare two flat yml files\
+  Call the utility passing two file names. [Here](https://asciinema.org/a/xHIdoU8a4D9o2L2jBgHJbOnpV) is the asciinema with the demonstration. 

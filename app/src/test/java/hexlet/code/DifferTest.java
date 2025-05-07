@@ -30,6 +30,14 @@ class DifferTest {
     }
 
     @Test
+    void testFlatYmlCompare() throws Exception {
+        var expected = readFixture("flat-yml-compare-result.txt");
+        var actual = Differ.generate("./src/test/resources/flat-yml-compare-src1.yml",
+                "./src/test/resources/flat-yml-compare-src2.yml");
+        assertEquals(expected, actual);
+    }
+
+    @Test
     void testWrongPath1() {
         assertThrows(IOException.class, () -> Differ.generate("nonexistentfile",
                 "./src/test/resources/flat-json-compare-src2.json"));
