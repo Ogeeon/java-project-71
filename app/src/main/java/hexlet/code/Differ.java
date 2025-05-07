@@ -13,6 +13,9 @@ import java.util.Set;
 import java.util.stream.Collectors;
 
 public class Differ {
+    private Differ() {
+        throw new IllegalStateException("Utility class");
+    }
 
     public static String generate(String filePath1, String filePath2) throws IOException {
         if (filePath1 == null || filePath2 == null) {
@@ -20,29 +23,11 @@ public class Differ {
         }
         Map<String, String> map1 = getFileContent(filePath1);
         Map<String, String> map2 = getFileContent(filePath2);
-        var m1ks = map1.keySet();
-        var m2ks = map2.keySet();
-        Set<String> union = new HashSet<>(m1ks);
-        union.addAll(m2ks);
-        return union.stream()
+        Set<String> joinedKeySet = new HashSet<>(map1.keySet());
+        joinedKeySet.addAll(map2.keySet());
+        return joinedKeySet.stream()
                 .sorted()
-                .map(k -> {
-                    var v1 = map1.get(k);
-                    var v2 = map2.get(k);
-                    var result = new StringBuilder();
-                    if (v1 != null && v1.equals(v2)) {
-                        result.append("    ").append(k).append(": ").append(v1);
-                    } else {
-                        if (v1 != null) {
-                            result.append("  - ").append(k).append(": ").append(v1);
-                        }
-                        if (v2 != null) {
-                            result.append(result.isEmpty() ? "" : "\n")
-                                    .append("  + ").append(k).append(": ").append(v2);
-                        }
-                    }
-                    return result.toString();
-                })
+                .map(key -> getDifferenceString(key, map1.get(key), map2.get(key)))
                 .collect(Collectors.joining("\n", "{\n", "\n}"));
     }
 
@@ -53,5 +38,21 @@ public class Differ {
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(Files.readString(path), new TypeReference<>() { });
+    }
+
+    private static String getDifferenceString(String key, String value1, String value2) {
+        var result = new StringBuilder();
+        if (value1 != null && value1.equals(value2)) {
+            result.append("    ").append(key).append(": ").append(value1);
+        } else {
+            if (value1 != null) {
+                result.append("  - ").append(key).append(": ").append(value1);
+            }
+            if (value2 != null) {
+                result.append(result.isEmpty() ? "" : "\n")
+                        .append("  + ").append(key).append(": ").append(value2);
+            }
+        }
+        return result.toString();
     }
 }
