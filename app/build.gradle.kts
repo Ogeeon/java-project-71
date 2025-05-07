@@ -7,6 +7,7 @@ plugins {
     checkstyle
     id("java")
     id("com.github.ben-manes.versions") version "0.50.0"
+    id("org.sonarqube") version "6.0.1.5171"
 }
 
 group = "hexlet.code"
@@ -44,3 +45,11 @@ tasks.jacocoTestReport {
 }
 
 tasks.jacocoTestReport { reports { xml.required.set(true) } }
+
+sonar {
+    properties {
+        property("sonar.projectKey", "Ogeeon_java-project-71")
+        property("sonar.organization", "ogeeon")
+        property("sonar.host.url", "https://sonarcloud.io")
+    }
+}
