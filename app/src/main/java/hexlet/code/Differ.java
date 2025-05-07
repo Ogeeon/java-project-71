@@ -3,6 +3,7 @@ package hexlet.code;
 import com.fasterxml.jackson.core.type.TypeReference;
 import com.fasterxml.jackson.databind.ObjectMapper;
 
+import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -13,9 +14,9 @@ import java.util.stream.Collectors;
 
 public class Differ {
 
-    public static String generate(String filePath1, String filePath2) throws Exception {
+    public static String generate(String filePath1, String filePath2) throws IOException {
         if (filePath1 == null || filePath2 == null) {
-            throw new Exception("Neither of file paths can be null");
+            throw new IOException("Neither of file paths can be null");
         }
         Map<String, String> map1 = getFileContent(filePath1);
         Map<String, String> map2 = getFileContent(filePath2);
@@ -23,7 +24,7 @@ public class Differ {
         var m2ks = map2.keySet();
         Set<String> union = new HashSet<>(m1ks);
         union.addAll(m2ks);
-        var output = union.stream()
+        return union.stream()
                 .sorted()
                 .map(k -> {
                     var v1 = map1.get(k);
@@ -43,13 +44,12 @@ public class Differ {
                     return result.toString();
                 })
                 .collect(Collectors.joining("\n", "{\n", "\n}"));
-        return output;
     }
 
-    private static Map<String, String> getFileContent(String fileName) throws Exception {
+    private static Map<String, String> getFileContent(String fileName) throws IOException {
         Path path = Paths.get(fileName).toAbsolutePath().normalize();
         if (!Files.exists(path)) {
-            throw new Exception("File '" + path + "' does not exist");
+            throw new IOException("File '" + path + "' does not exist");
         }
         ObjectMapper objectMapper = new ObjectMapper();
         return objectMapper.readValue(Files.readString(path), new TypeReference<>() { });
