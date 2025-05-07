@@ -1,6 +1,7 @@
 ### Hexlet tests and linter status:
 [![Actions Status](https://github.com/Ogeeon/java-project-71/actions/workflows/hexlet-check.yml/badge.svg)](https://github.com/Ogeeon/java-project-71/actions)
 [![Java CI](https://github.com/Ogeeon/java-project-71/actions/workflows/main.yml/badge.svg)](https://github.com/Ogeeon/java-project-71/actions/workflows/main.yml)
+[![Quality gate](https://sonarcloud.io/api/project_badges/quality_gate?project=Ogeeon_java-project-71)](https://sonarcloud.io/summary/new_code?id=Ogeeon_java-project-71)
 
 ### About
 This is a small console application that calculates difference of text files.
