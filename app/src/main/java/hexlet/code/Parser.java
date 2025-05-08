@@ -12,10 +12,10 @@ import java.util.Map;
 
 public final class Parser {
     private Parser() {
-        throw new IllegalStateException("Utility class");
+        throw new AssertionError("Utility class should not be instantiated");
     }
 
-    public static Map<String, String> getFileContentMap(String fileName) throws IOException {
+    public static Map<String, Object> getFileContentMap(String fileName) throws IOException {
         Path path = Paths.get(fileName).toAbsolutePath().normalize();
         if (!Files.exists(path)) {
             throw new IOException("File '" + path + "' does not exist");
@@ -32,7 +32,7 @@ public final class Parser {
         return switch (fileType) {
             case "json" -> new ObjectMapper();
             case "yml" ->  new ObjectMapper(new YAMLFactory());
-            default -> throw new UnsupportedOperationException("Unsupported input format: " + fileType);
+            default -> throw new IllegalArgumentException("Unsupported input format: " + fileType);
         };
     }
 }

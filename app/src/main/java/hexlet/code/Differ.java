@@ -1,43 +1,48 @@
 package hexlet.code;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.Map;
 import java.util.Set;
-import java.util.stream.Collectors;
+import java.util.stream.Stream;
 
 public final class Differ {
     private Differ() {
-        throw new IllegalStateException("Utility class");
+        throw new AssertionError("Utility class should not be instantiated");
     }
 
-    public static String generate(String filePath1, String filePath2) throws IOException {
+    public static String generate(String filePath1, String filePath2, DiffFormatter formatter) throws IOException {
         if (filePath1 == null || filePath2 == null) {
             throw new IOException("Neither of file paths can be null");
         }
-        Map<String, String> map1 = Parser.getFileContentMap(filePath1);
-        Map<String, String> map2 = Parser.getFileContentMap(filePath2);
+        if (formatter == null) {
+            throw new IllegalArgumentException("Formatter cannot be null");
+        }
+        Map<String, Object> map1 = Parser.getFileContentMap(filePath1);
+        Map<String, Object> map2 = Parser.getFileContentMap(filePath2);
         Set<String> joinedKeySet = new HashSet<>(map1.keySet());
         joinedKeySet.addAll(map2.keySet());
-        return joinedKeySet.stream()
+        var difference = joinedKeySet.stream()
                 .sorted()
-                .map(key -> getDifferenceString(key, map1.get(key), map2.get(key)))
-                .collect(Collectors.joining("\n", "{\n", "\n}"));
+                .flatMap(key -> getDifference(key, map1, map2))
+                .toList();
+        return formatter.format(difference);
     }
 
-    private static String getDifferenceString(String key, String value1, String value2) {
-        var result = new StringBuilder();
-        if (value1 != null && value1.equals(value2)) {
-            result.append("    ").append(key).append(": ").append(value1);
-        } else {
-            if (value1 != null) {
-                result.append("  - ").append(key).append(": ").append(value1);
-            }
-            if (value2 != null) {
-                result.append(result.isEmpty() ? "" : "\n")
-                        .append("  + ").append(key).append(": ").append(value2);
-            }
+    private static Stream<DiffElement> getDifference(String key, Map<String, Object> map1, Map<String, Object> map2) {
+        var result = new ArrayList<DiffElement>();
+        var value1 = map1.get(key);
+        var value2 = map2.get(key);
+        var isEqual = map1.containsKey(key) && map2.containsKey(key)
+                && ((value1 == null && value2 == null)
+                    || (value1 != null && value1.equals(value2)));
+        if (map1.containsKey(key)) {
+            result.add(new DiffElement(isEqual ? " " : "-", key, value1));
         }
-        return result.toString();
+        if (map2.containsKey(key)) {
+            result.add(new DiffElement(isEqual ? " " : "+", key, value2));
+        }
+        return result.stream().distinct();
     }
 }
