@@ -25,10 +25,17 @@ class DifferTest {
 
     @Test
     void testJsonCompare() throws Exception {
-        var expected = readFixture("json-compare-result.txt");
+        var expected = readFixture("json-stylish-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/json-compare-src1.json",
-                "./src/test/resources/json-compare-src2.json",
-                new StylishFormatter());
+                "./src/test/resources/json-compare-src2.json", "stylish");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testJsonCompareWithPlainFormatter() throws Exception {
+        var expected = readFixture("json-plain-compare-result.txt");
+        var actual = Differ.generate("./src/test/resources/json-compare-src1.json",
+                "./src/test/resources/json-compare-src2.json", "plain");
         assertEquals(expected, actual);
     }
 
@@ -36,8 +43,7 @@ class DifferTest {
     void testFlatYmlCompare() throws Exception {
         var expected = readFixture("flat-yml-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/flat-yml-compare-src1.yml",
-                "./src/test/resources/flat-yml-compare-src2.yml",
-                new StylishFormatter());
+                "./src/test/resources/flat-yml-compare-src2.yml", "stylish");
         assertEquals(expected, actual);
     }
 
@@ -52,33 +58,24 @@ class DifferTest {
     @Test
     void testNullPath1() {
         assertThrows(IOException.class, () -> Differ.generate(null,
-                "./src/test/resources/json-compare-src2.json",
-                new StylishFormatter()));
+                "./src/test/resources/json-compare-src2.json", "stylish"));
     }
 
     @Test
     void testNullPath2() {
         assertThrows(IOException.class, () -> Differ.generate("./src/test/resources/json-compare-src1.json",
-                null, new StylishFormatter()));
+                null, "stylish"));
     }
 
     @Test
     void testWrongPath1() {
         assertThrows(IOException.class, () -> Differ.generate("nonexistentfile",
-                "./src/test/resources/json-compare-src2.json",
-                new StylishFormatter()));
+                "./src/test/resources/json-compare-src2.json", "stylish"));
     }
 
     @Test
     void testWrongPath2() {
         assertThrows(IOException.class, () -> Differ.generate("./src/test/resources/json-compare-src1.json",
-                "nonexistentfile", new StylishFormatter()));
-    }
-
-    @Test
-    void testNullFormatter() {
-        assertThrows(IllegalArgumentException.class,
-                () -> Differ.generate("./src/test/resources/json-compare-src1.json",
-                "./src/test/resources/json-compare-src2.json", null));
+                "nonexistentfile", "stylish"));
     }
 }

@@ -31,7 +31,7 @@ public final class Parser {
     private static ObjectMapper getSuitableMapper(String fileType) {
         return switch (fileType) {
             case "json" -> new ObjectMapper();
-            case "yml" ->  new ObjectMapper(new YAMLFactory());
+            case "yml" -> new ObjectMapper(new YAMLFactory());
             default -> throw new IllegalArgumentException("Unsupported input format: " + fileType);
         };
     }

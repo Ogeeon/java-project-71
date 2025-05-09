@@ -20,8 +20,7 @@ public class App implements Callable<String> {
 
     @Override
     public String call() throws Exception {
-        var formatter = format.equals("stylish") ? new StylishFormatter() : null;
-        var diff = Differ.generate(filePath1, filePath2, formatter);
+        var diff = Differ.generate(filePath1, filePath2, format);
         System.out.println(diff);
         return "OK";
     }
