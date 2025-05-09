@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class PlainFormatter implements DiffFormatter {
+public final class PlainFormatter implements DiffFormatter {
     public String format(List<DiffElement> differences) {
         return differences.stream()
                 .map(this::getDiffLine)

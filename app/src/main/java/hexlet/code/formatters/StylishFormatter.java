@@ -6,7 +6,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 
-public class StylishFormatter implements DiffFormatter {
+public final class StylishFormatter implements DiffFormatter {
     private static final int IDENT_SPACES_COUNT = 2;
 
     public String format(List<DiffElement> differences) {

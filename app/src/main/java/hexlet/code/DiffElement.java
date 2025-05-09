@@ -9,7 +9,7 @@ import lombok.ToString;
 @Setter
 @AllArgsConstructor
 @ToString
-public class DiffElement {
+public final class DiffElement {
     private String key;
     private boolean isValue1Present;
     private Object value1;

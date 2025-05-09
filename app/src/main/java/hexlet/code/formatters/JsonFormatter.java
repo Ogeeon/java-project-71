@@ -11,7 +11,7 @@ import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
 
-public class JsonFormatter implements DiffFormatter {
+public final class JsonFormatter implements DiffFormatter {
     @Override
     public String format(List<DiffElement> differences) {
         return differences.stream()
