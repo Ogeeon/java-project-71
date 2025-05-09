@@ -12,6 +12,10 @@ public final class Differ {
         throw new AssertionError("Utility class should not be instantiated");
     }
 
+    public static String generate(String filePath1, String filePath2) throws IOException {
+        return generate(filePath1, filePath2, "stylish");
+    }
+
     public static String generate(String filePath1, String filePath2, String format) throws IOException {
         if (filePath1 == null || filePath2 == null) {
             throw new IOException("Neither of file paths can be null");
