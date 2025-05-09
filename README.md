@@ -21,3 +21,5 @@ to build and run the application.
   Call the utility passing two file names. [Here](https://asciinema.org/a/hhhnSrSkHtwC4krdg6Ib9Ql4T) is the asciinema with the demonstration.
 - Same as above but with plain format\
   Call the utility passing `-f plain` parameter and two file names. [Here](https://asciinema.org/a/YWOihQ4QrDoJOvvDhRxmkoiPR) is the asciinema with the demonstration.
+- Same as about but with json output\
+  Call the utility passing `-f json` parameter and two file names. [Here](https://asciinema.org/a/TWoQKt5Nqp1JPPmNxfseCM69N) is the asciinema with the demonstration.

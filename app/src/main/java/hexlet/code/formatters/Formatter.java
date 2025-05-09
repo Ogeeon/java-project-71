@@ -9,6 +9,7 @@ public final class Formatter {
         return switch (format) {
             case "stylish" -> new StylishFormatter();
             case "plain" -> new PlainFormatter();
+            case "json" -> new JsonFormatter();
             default -> throw new IllegalArgumentException("Unsupported format name: " + format);
         };
     }

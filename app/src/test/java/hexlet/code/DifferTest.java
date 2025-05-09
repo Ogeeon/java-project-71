@@ -25,7 +25,7 @@ class DifferTest {
 
     @Test
     void testJsonCompare() throws Exception {
-        var expected = readFixture("json-stylish-compare-result.txt");
+        var expected = readFixture("stylish-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/json-compare-src1.json",
                 "./src/test/resources/json-compare-src2.json", "stylish");
         assertEquals(expected, actual);
@@ -33,9 +33,17 @@ class DifferTest {
 
     @Test
     void testJsonCompareWithPlainFormatter() throws Exception {
-        var expected = readFixture("json-plain-compare-result.txt");
+        var expected = readFixture("plain-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/json-compare-src1.json",
                 "./src/test/resources/json-compare-src2.json", "plain");
+        assertEquals(expected, actual);
+    }
+
+    @Test
+    void testJsonCompareWithJsonFormatter() throws Exception {
+        var expected = readFixture("json-compare-result.json");
+        var actual = Differ.generate("./src/test/resources/json-compare-src1.json",
+                "./src/test/resources/json-compare-src2.json", "json");
         assertEquals(expected, actual);
     }
 

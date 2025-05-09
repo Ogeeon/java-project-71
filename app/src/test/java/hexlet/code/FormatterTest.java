@@ -1,6 +1,7 @@
 package hexlet.code;
 
 import hexlet.code.formatters.Formatter;
+import hexlet.code.formatters.JsonFormatter;
 import hexlet.code.formatters.PlainFormatter;
 import hexlet.code.formatters.StylishFormatter;
 import org.junit.jupiter.api.Test;
@@ -23,6 +24,12 @@ class FormatterTest {
     void testPlainOption() {
         var actual = Formatter.get("plain");
         assertInstanceOf(PlainFormatter.class, actual);
+    }
+
+    @Test
+    void testJsonOption() {
+        var actual = Formatter.get("json");
+        assertInstanceOf(JsonFormatter.class, actual);
     }
 
     @Test
