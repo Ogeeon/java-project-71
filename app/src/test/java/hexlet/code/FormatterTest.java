@@ -12,7 +12,7 @@ import static org.junit.jupiter.api.Assertions.assertInstanceOf;
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
-public class FormatterTest {
+class FormatterTest {
     @Test
     void testStylishOption() {
         var actual = Formatter.get("stylish");
