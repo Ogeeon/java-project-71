@@ -3,11 +3,11 @@ package hexlet.code;
 import picocli.CommandLine;
 import picocli.CommandLine.Command;
 
-import java.util.concurrent.Callable;
+import java.io.IOException;
 
 @Command(name = "gendiff", mixinStandardHelpOptions = true, version = "gendiff 0.1",
         description = "Compares two configuration files and shows a difference.")
-public final class App implements Callable<String> {
+public final class App implements Runnable {
 
     @CommandLine.Parameters(index = "0", description = "path to first file")
     private String filePath1;
@@ -19,10 +19,12 @@ public final class App implements Callable<String> {
     private String format = "stylish";
 
     @Override
-    public String call() throws Exception {
-        var diff = Differ.generate(filePath1, filePath2, format);
-        System.out.println(diff);
-        return "OK";
+    public void run() {
+        try {
+            System.out.println(Differ.generate(filePath1, filePath2, format));
+        } catch (IOException e) {
+            throw new RuntimeException(e);
+        }
     }
 
     public static void main(String[] args) {
