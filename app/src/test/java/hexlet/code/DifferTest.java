@@ -56,7 +56,7 @@ class DifferTest {
     }
 
     @Test
-    void testFlatYmlCompare() throws Exception {
+    void testYmlCompare() throws Exception {
         var expected = readFixture("yml-compare-result.txt");
         var actual = Differ.generate("./src/test/resources/yml-compare-src1.yml",
                 "./src/test/resources/yml-compare-src2.yml", "stylish");
@@ -68,7 +68,7 @@ class DifferTest {
         Constructor<Differ> constructor = Differ.class.getDeclaredConstructor();
         constructor.setAccessible(true);
         Exception exception = assertThrows(InvocationTargetException.class, constructor::newInstance);
-        assertEquals(AssertionError.class, exception.getCause().getClass());
+        assertEquals(UnsupportedOperationException.class, exception.getCause().getClass());
     }
 
     @Test
