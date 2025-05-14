@@ -23,7 +23,7 @@ public final class App implements Runnable {
         try {
             System.out.println(Differ.generate(filePath1, filePath2, format));
         } catch (IOException e) {
-            throw new RuntimeException(e);
+            throw new RuntimeException("Differ call failed with exception: " + e.getMessage());
         }
     }
 
