@@ -9,7 +9,10 @@ import java.util.Set;
 
 public final class Differ {
     private Differ() {
-        throw new AssertionError("Utility class should not be instantiated");
+        // Использование AssertionError было продиктовано тем, что разработчику, столкнувшемуся с ним,
+        // мы передаём сообщение: "Твоё представление о том, как работать с этим классом - ошибочно".
+        // Я натолкнулся на такой совет в интернете, когда расширял покрытие кода по отчёту JaCoCo.
+        throw new UnsupportedOperationException("Utility class should not be instantiated");
     }
 
     public static String generate(String filePath1, String filePath2) throws IOException {
