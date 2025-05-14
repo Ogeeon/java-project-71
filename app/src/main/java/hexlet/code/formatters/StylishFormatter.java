@@ -17,7 +17,8 @@ public final class StylishFormatter implements DiffFormatter {
 
     private Stream<String> getDiffLines(DiffElement e) {
         var sb = new StringBuilder();
-        if (e.isUnchanged()) {
+        DiffElement.Status status = e.getStatus();
+        if (status == DiffElement.Status.UNCHANGED) {
             sb.append(" ".repeat(IDENT_SPACES_COUNT))
                     .append("  ")
                     .append(e.getKey())
@@ -25,14 +26,14 @@ public final class StylishFormatter implements DiffFormatter {
                     .append(e.getValue1());
             return Stream.of(sb.toString());
         }
-        if (e.isValue1Present()) {
+        if (status == DiffElement.Status.UPDATED || status == DiffElement.Status.REMOVED) {
             sb.append(" ".repeat(IDENT_SPACES_COUNT))
                     .append("- ")
                     .append(e.getKey())
                     .append(": ")
                     .append(e.getValue1());
         }
-        if (e.isValue2Present()) {
+        if (status == DiffElement.Status.UPDATED || status == DiffElement.Status.ADDED) {
             sb.append(sb.isEmpty() ? "" : "\n")
                     .append(" ".repeat(IDENT_SPACES_COUNT))
                     .append("+ ")

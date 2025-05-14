@@ -21,22 +21,19 @@ public final class JsonFormatter implements DiffFormatter {
     }
 
     private String getDiffJson(DiffElement e) {
-        if (e.isUnchanged()) {
+        DiffElement.Status status = e.getStatus();
+        if (e.getStatus() == DiffElement.Status.UNCHANGED) {
             return null;
         }
         var sb = new StringBuilder();
         sb.append("\"").append(e.getKey()).append("\":");
-        String status;
-        if (e.isValue1Present() && e.isValue2Present()) {
-            status = "updated";
-        } else {
-            if (e.isValue1Present()) {
-                status = "removed";
-            } else {
-                status = "added";
-            }
-        }
-        var item = new HelperPOJO(status, e.getValue1(), e.getValue2());
+        String statusStr = switch (status) {
+            case DiffElement.Status.UPDATED -> "updated";
+            case DiffElement.Status.REMOVED -> "removed";
+            case DiffElement.Status.ADDED -> "added";
+            default -> ""; // this case is covered above
+        };
+        var item = new HelperPOJO(statusStr, e.getValue1(), e.getValue2());
         ObjectMapper objectMapper = new ObjectMapper();
         try {
             sb.append(objectMapper.writeValueAsString(item));

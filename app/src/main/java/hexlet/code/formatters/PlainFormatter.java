@@ -15,20 +15,20 @@ public final class PlainFormatter implements DiffFormatter {
     }
 
     private String getDiffLine(DiffElement e) {
-        if (e.isUnchanged()) {
+        if (e.getStatus() == DiffElement.Status.UNCHANGED) {
             return null;
         }
         var sb = new StringBuilder("Property '");
         sb.append(e.getKey());
         sb.append("' was ");
-        if (e.isValue1Present() && e.isValue2Present()) {
+        if (e.getStatus() == DiffElement.Status.UPDATED) {
             sb.append("updated. ")
                     .append("From ")
                     .append(getValueRepresentation(e.getValue1()))
                     .append(" to ")
                     .append(getValueRepresentation(e.getValue2()));
         } else {
-            if (e.isValue1Present()) {
+            if (e.getStatus() == DiffElement.Status.REMOVED) {
                 sb.append("removed");
             } else {
                 sb.append("added with value: ");

@@ -15,10 +15,31 @@ public final class DiffElement {
     private Object value1;
     private boolean isValue2Present;
     private Object value2;
+    public enum Status {
+        UNCHANGED,
+        UPDATED,
+        REMOVED,
+        ADDED
+    }
 
-    public boolean isUnchanged() {
+    private boolean isUnchanged() {
         return (isValue1Present && isValue2Present)
                 && ((value1 == null && value2 == null)
                 || (value1 != null && value1.equals(value2)));
+    }
+
+    public Status getStatus() {
+        if (isUnchanged()) {
+            return Status.UNCHANGED;
+        }
+        if (isValue1Present() && isValue2Present()) {
+            return Status.UPDATED;
+        } else {
+            if (isValue1Present()) {
+                return Status.REMOVED;
+            } else {
+                return Status.ADDED;
+            }
+        }
     }
 }
