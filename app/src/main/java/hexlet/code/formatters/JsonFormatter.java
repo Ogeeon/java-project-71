@@ -31,7 +31,7 @@ public final class JsonFormatter implements DiffFormatter {
             case DiffElement.Status.UPDATED -> "updated";
             case DiffElement.Status.REMOVED -> "removed";
             case DiffElement.Status.ADDED -> "added";
-            default -> ""; // this case is covered above
+            default -> throw new IllegalStateException("Unknown DiffElement status: " + status);
         };
         var item = new HelperPOJO(statusStr, e.getValue1(), e.getValue2());
         ObjectMapper objectMapper = new ObjectMapper();
