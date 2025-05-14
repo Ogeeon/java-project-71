@@ -17,10 +17,6 @@ public final class Parser {
         return objectMapper.readValue(content, new TypeReference<>() { });
     }
 
-    private static String detectFileType(String fileName) {
-        return fileName.substring(fileName.lastIndexOf('.') + 1).toLowerCase();
-    }
-
     private static ObjectMapper getSuitableMapper(String type) {
         return switch (type) {
             case "json" -> new ObjectMapper();
