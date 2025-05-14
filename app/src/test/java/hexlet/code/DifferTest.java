@@ -57,9 +57,9 @@ class DifferTest {
 
     @Test
     void testFlatYmlCompare() throws Exception {
-        var expected = readFixture("flat-yml-compare-result.txt");
-        var actual = Differ.generate("./src/test/resources/flat-yml-compare-src1.yml",
-                "./src/test/resources/flat-yml-compare-src2.yml", "stylish");
+        var expected = readFixture("yml-compare-result.txt");
+        var actual = Differ.generate("./src/test/resources/yml-compare-src1.yml",
+                "./src/test/resources/yml-compare-src2.yml", "stylish");
         assertEquals(expected, actual);
     }
 
