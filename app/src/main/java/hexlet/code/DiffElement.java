@@ -32,14 +32,14 @@ public final class DiffElement {
         if (isUnchanged()) {
             return Status.UNCHANGED;
         }
-        if (isValue1Present() && isValue2Present()) {
-            return Status.UPDATED;
-        } else {
-            if (isValue1Present()) {
-                return Status.REMOVED;
+        if (isValue1Present()) {
+            if (isValue2Present()) {
+                return Status.UPDATED;
             } else {
-                return Status.ADDED;
+                return Status.REMOVED;
             }
+        } else {
+            return Status.ADDED;
         }
     }
 }
